@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	h1='users'
+	form.login(action='/users/add' method='post')
+		.item-group
+			input.user-name(type='text' name='name')
+			input.user-passwd(type='password' name='password')
+			input.user-type(type='text' name='type')
+			input.btn-login(type='submit' value='create user')
+
+	form.login(action='/users/search' method='post')
+		.item-group
+			input.user-name(type='text' name='name')
+			input.btn-login(type='submit' value='search user')
+	script(type='text/javascript' src='/javascripts/users.js')
+
+
+			
