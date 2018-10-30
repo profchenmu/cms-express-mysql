@@ -19,6 +19,18 @@ global.pool = mysql.createPool(dbconfig.mysql);
 
 const app = express();
 
+app.all('*',function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+  if (req.method == 'OPTIONS') {
+      res.send(200); /*让options请求快速返回*/
+  }
+  else {
+      next();
+  }
+});
+
 app.use(session({
   genid: (req) => {
     console.log('Inside the session middleware')
@@ -52,9 +64,9 @@ app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/list', routes);
-app.use('/users', users);
-app.use('/login', login);
+app.use('/api/list', routes);
+app.use('/api/users', users);
+app.use('/api/login', login);
 
 
 // catch 404 and forward to error handler
