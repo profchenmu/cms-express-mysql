@@ -1,12 +1,11 @@
 extends layout
 
 block content
-	h1='login'
-	form.login(action='/login' method='post')
-		.item-group
-			input.user-name(type='text' name='name')
-			input.user-passwd(type='password' name='password')
-			input.btn-login(type='submit' value='login')
-
-
-			
+  h1='login'
+  button.btn-add-mock='addmock'
+  form.login(action='/login' method='post')
+    .item-group
+      input.user-name(type='text' name='name')
+      input.user-passwd(type='password' name='password')
+      input.btn-login(type='submit' value='login')
+  script(type='text/javascript' src='/javascripts/index.js')

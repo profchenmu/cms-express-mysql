@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const lessMiddleware = require('less-middleware');
 const routes = require('./routes/index');
+const lottery = require('./routes/lottery');
+const lotteryForAdmin = require('./routes/lotteryForAdmin');
+const profile = require('./routes/profile');
 const users = require('./routes/users');
 const login = require('./routes/login');
 const uuid = require('uuid/v4')
@@ -67,7 +70,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/list', routes);
 app.use('/api/users', users);
 app.use('/api/login', login);
-
+app.use('/api/lottery', lottery);
+app.use('/api/lotteryForAdmin', lotteryForAdmin);
+app.use('/api/profile', profile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

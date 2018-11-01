@@ -12,6 +12,18 @@ $('.btn').on('click', function(event) {
 	});
 });
 
+$('.btn-add-mock').on('click', function(event) {
+	event.preventDefault();
+	alert('cao');
+	$.ajax({
+		url: '/api/lotteryForAdmin/addMock',
+		type: 'POST',
+		success: function(data){
+			console.log(data)
+		}
+	});
+});
+
 window.onload = function() {
 	$.ajax({
 		url: '/list/list',
