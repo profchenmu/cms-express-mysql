@@ -8,17 +8,30 @@ const bcrypt = require('bcrypt-nodejs');
 // });
 
 router.get('/list', function(req, res, next) {
-  const resData = {
-    msg: 'successful',
-    code: 1,
-    data: [{
-      lotteryId: '',
-      lotteryName: '',
-      joinAccount: 0,
-      sponcerName: '',
-    }]
-  };
-  res.json(resData);
+  // const resData = {
+  //   msg: 'successful',
+  //   code: 1,
+  //   data: [{
+  //     lotteryId: '',
+  //     lotteryName: '',
+  //     joinAccount: 0,
+  //     sponcerName: '',
+  //   }]
+  // };
+  // res.json(resData);
+
+  global.pool.getConnection((err, connection) => {
+    connection.query($sql.queryAll, null, (err, result) => {
+      console.log(result.startTime);
+      const resData = {
+        msg: 'successful',
+        code: 1,
+        data: result
+      };
+      res.json(resData);
+      connection.release();
+    });
+  })
 });
 
 router.get('/banner', function(req, res, next) {
