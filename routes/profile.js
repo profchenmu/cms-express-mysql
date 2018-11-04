@@ -59,16 +59,45 @@ router.put('/address/edit/:userId', function(req, res, next) {
 
 router.get('/basicAccount/:userId', function(req, res, next) {
   console.log(req.params.userId);
-  const resData = {
-    msg: 'successful',
-    code: 1,
-    data: {
-      lotteryJoinAccount: 2,
-      lotteryStartAccount: 2,
-      lotteryGetAccount: 2,
-    }
-  };
-  res.json(resData);
+  const data = ['lotteryGetAccount', 'lotteryGet', req.params.userId];
+  const resData = {};
+  global.pool.getConnection((err, connection) => {
+    connection.query($lotteryForAdmin.countByUserIdAndLotteryId, data, (error, result) => {
+      if (error || err) {
+        console.log(error, err)
+        return false;
+      }
+      resData.lotteryGetAccount = result.lotteryGetAccount;
+      const data2 = ['lotteryStartAccount', 'lotteryStart', req.params.userId];
+      connection.query($lotteryForAdmin.countByUserIdAndLotteryId, data2, (error, result) => {
+        if (error || err) {
+          console.log(error, err)
+          return false;
+        }
+        resData.lotteryStartAccount = result.lotteryStartAccount;
+        const data3 = ['lotteryJoinAccount', 'lotteryJoin', req.params.userId];
+        connection.query($lotteryForAdmin.countByUserIdAndLotteryId, data2, (error, result) => {
+          if (error || err) {
+            console.log(error, err)
+            return false;
+          }
+          resData.lotteryJoinAccount = result.lotteryJoinAccount;
+          connection.release();
+          res.json(resData);
+        });
+      });
+    });
+  });
+  // const resData = {
+  //   msg: 'successful',
+  //   code: 1,
+  //   data: {
+  //     lotteryJoinAccount: 2,
+  //     lotteryStartAccount: 2,
+  //     lotteryGetAccount: 2,
+  //   }
+  // };
+  // res.json(resData);
 });
 
 module.exports = router;
