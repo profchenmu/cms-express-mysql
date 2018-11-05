@@ -1,8 +1,8 @@
 module.exports = {
 	mysql:{
-		host: 'rm-uf6y4phzh7jtg92ue.mysql.rds.aliyuncs.com',
+		host: '127.0.0.1',
 		user: 'root',
-		password: '8hOFI1A0jj0BOmsF',
+		password: '02123607',
 		database: 'lottery',
 		port: 3306
 	}
