@@ -2,10 +2,46 @@ const express = require('express');
 const router = express.Router();
 const $sql = require('../sql');
 const bcrypt = require('bcrypt-nodejs');
+const https = require('https');
+const jwt = require('jsonwebtoken');
+const secretOrPrivateKey = "testString";
 
 // router.get('/', function(req, res, next) {
 //   res.render('users');
 // });
+
+router.get('/openid', function (req, res) {
+  console.log(req.query.code);
+  console.log(url, 'urlurlurlurl');
+
+  https.get(url, (weixinres) => {
+    const datas = [];
+    let size = 0;
+    weixinres.on('data', function (data) {
+      datas.push(data);
+      size += data.length;
+    });
+    weixinres.on("end", function () {
+      let buff = Buffer.concat(datas, size);
+      const result = JSON.parse(buff.toString());
+      console.log(result);
+      let token = jwt.sign({
+        name: result.openid,
+        data: result.session_key
+      }, secretOrPrivateKey, {
+        expiresIn: 60 * 1
+      });
+      res.json({
+        code: 1,
+        msg: 'successful',
+        data: {
+          openid: result.openid,
+          token
+        }
+      })
+    });
+  });
+});
 
 router.get('/address/detail/:userId', function(req, res, next) {
   console.log(req.params.userId);
